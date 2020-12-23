@@ -1,10 +1,12 @@
+'use strict'
 const express = require('express');
+const {PORT} = require('./config')
 
-const PORT = process.env.PORT || 5000
+const port = PORT || 5000
 
 const app = express()
 app.use(express.json())
 
-app.listen(PORT, () => {
-    console.log(`Application running on port ${PORT}`)
+app.listen(port, () => {
+    console.log(`Application running on port ${port}`)
 })
