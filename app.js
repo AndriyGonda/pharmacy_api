@@ -15,6 +15,17 @@ app.use(logger('dev'));
 app.use('/', [
     require('./src/routes/users')
 ])
+
+// eslint-disable-next-line no-unused-vars
+app.use((error, req, res, next) => {
+    res.status(error.status || 500);
+    const errMessage = {status: error.status, message: error.message};
+    if (process.env === 'development') {
+        errMessage.stack = error.stack;
+        [errMessage.body] = error;
+    }
+    res.json({errMessage});
+});
 app.listen(port, () => {
     console.log(db);
     console.log(`Application running on port ${port}`);
