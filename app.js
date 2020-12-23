@@ -12,7 +12,9 @@ const app = express()
 app.use(express.json())
 app.use(helmet());
 app.use(logger('dev'));
-
+app.use('/', [
+    require('./src/routes/users')
+])
 app.listen(port, () => {
     console.log(db);
     console.log(`Application running on port ${port}`);
