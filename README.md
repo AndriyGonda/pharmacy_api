@@ -1,4 +1,4 @@
-## Pharmacy backend test API
+## Pharmacy backend test API 0.0.2
 
 ## Instalation
 
@@ -19,3 +19,6 @@
 8) Using Postman or another API Client make request: `GET http://localhost:5050/users`
 
 9) Try to create a new user by request: `POST http://localhost:5050/users`
+
+# Features 
+In current release added jwt auth

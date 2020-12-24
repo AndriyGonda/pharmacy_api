@@ -1,34 +1,24 @@
-'use strict'
-const {validationResult } = require('express-validator');
-const { User } = require('../models')
+const userSerializer = require('../serializer');
+const { User } = require('../models');
 
 const getUsers = (req, res, next) => {
     User.findAll()
-        .then(users => res.json(
-            users))
-        .catch(next)
-}
+        .then((users) => res.json(
+            userSerializer.serialize(users, User)
+        ))
+        .catch(next);
+};
 
-
-const postUsers = (req, res, next) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-        return res.status(422).json({
-            errors: errors.array()
-        });
-    }
-
-    const props = req.body
+const postUsers = (req, res) => {
+    const props = req.body;
     User.create(props)
-        .then(user => res.status(200).json({
-            user
-        }))
-        .catch(err => res.status(500).json({
-            detail: err
-        }))
-}
+        .then((user) => res.json(userSerializer.serialize(user, User)))
+        .catch((err) => res.status(400).json({
+            detail: { errors: err.errors.map((error) => error.message) }
+        }));
+};
 
 module.exports = {
     getUsers,
     postUsers
-}
+};
