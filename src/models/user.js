@@ -1,6 +1,7 @@
 const {
     Model
 } = require('sequelize');
+const bcrypt = require('bcrypt');
 
 // eslint-disable-next-line no-unused-vars
 module.exports = (sequelize, DataTypes) => {
@@ -21,9 +22,10 @@ module.exports = (sequelize, DataTypes) => {
             autoIncrement: true,
             unique: true
         },
-        name: {
+        login: {
             type: DataTypes.STRING,
-            allowNull: false
+            allowNull: false,
+            unique: true
         },
         email: {
             type: DataTypes.STRING,
@@ -31,7 +33,8 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false
         },
         password: {
-            type: DataTypes.STRING(128)
+            type: DataTypes.STRING,
+            allowNull: false
         },
         isAdmin: {
             type: DataTypes.BOOLEAN,
@@ -43,14 +46,13 @@ module.exports = (sequelize, DataTypes) => {
         tableName: 'users',
         underscored: true,
         timestamps: false,
-        instanceMethods: {
-            generateHash(password) {
-                return 'test'
-            },
-            validPassword(password) {
-                return false
+        hooks: {
+            beforeCreate: (user) => {
+                const salt = bcrypt.genSaltSync();
+                user.password = bcrypt.hashSync(user.password, salt);
             }
         }
     });
     return User;
+
 };

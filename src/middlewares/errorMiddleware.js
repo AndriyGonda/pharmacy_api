@@ -7,6 +7,7 @@ const errorMiddleware = (error, req, res, next) => {
         [errMessage.body] = error;
     }
     res.json({ errMessage });
+    next();
 };
 
 module.exports = errorMiddleware;

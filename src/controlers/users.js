@@ -1,12 +1,10 @@
+const userSerializer = require('../serializer');
 const { User } = require('../models');
 
 const getUsers = (req, res, next) => {
-    // User.findByPk(1).then((user) => {
-    //     console.log(user);
-    // });
     User.findAll()
         .then((users) => res.json(
-            users
+            userSerializer.serialize(users, User)
         ))
         .catch(next);
 };
@@ -14,11 +12,9 @@ const getUsers = (req, res, next) => {
 const postUsers = (req, res) => {
     const props = req.body;
     User.create(props)
-        .then((user) => res.status(200).json({
-            user
-        }))
-        .catch((err) => res.status(500).json({
-            detail: err
+        .then((user) => res.json(userSerializer.serialize(user, User)))
+        .catch((err) => res.status(400).json({
+            detail: { errors: err.errors.map((error) => error.message) }
         }));
 };
 

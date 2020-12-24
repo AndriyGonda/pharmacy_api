@@ -10,5 +10,6 @@ const db = {
 };
 module.exports = {
     PORT: process.env.PORT,
-    db
+    db,
+    SECRET_KEY: process.env.SECRET_KEY || 'default_secret_key'
 };

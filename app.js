@@ -16,7 +16,8 @@ app.use(express.json());
 app.use(helmet());
 app.use(logger('dev'));
 app.use('/', [
-    require('./src/routes/users')
+    require('./src/routes/users'),
+    require('./src/routes/auth')
 ]);
 
 // eslint-disable-next-line no-unused-vars
