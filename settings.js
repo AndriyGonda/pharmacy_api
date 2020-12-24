@@ -11,5 +11,6 @@ const db = {
 module.exports = {
     PORT: process.env.PORT,
     db,
-    SECRET_KEY: process.env.SECRET_KEY || 'default_secret_key'
+    SECRET_KEY: process.env.SECRET_KEY || 'default_secret_key',
+    JWT_EXPIRES_IN: Number(process.env.JWT_EXPIRES_IN || 3600)
 };
