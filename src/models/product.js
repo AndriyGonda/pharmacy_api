@@ -2,9 +2,8 @@ const {
     Model
 } = require('sequelize');
 
-// eslint-disable-next-line no-unused-vars
 module.exports = (sequelize, DataTypes) => {
-    class User extends Model {
+    class Product extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -14,24 +13,23 @@ module.exports = (sequelize, DataTypes) => {
             // define association here
         }
     }
-    User.init({
+    Product.init({
         id: {
             type: DataTypes.INTEGER,
-            primaryKey: true,
-            autoIncrement: true
+            autoIncrement: true,
+            primaryKey: true
         },
-        name: {
-            type: DataTypes.STRING,
-            allowNull: false
-        },
-        email: DataTypes.STRING,
-        firstName: DataTypes.STRING(50)
+        title: DataTypes.STRING,
+
+        price: {
+            type: DataTypes.FLOAT,
+            defaultValue: 0.0
+        }
     }, {
         sequelize,
-        modelName: 'User',
-        tableName: 'users',
-        underscored: true,
-        timestamps: false
+        modelName: 'Product',
+        tableName: 'products',
+        underscored: true
     });
-    return User;
+    return Product;
 };

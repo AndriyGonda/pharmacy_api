@@ -5,9 +5,12 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon app.js",
+    "dev": "nodemon --exec \"npm run lint && node app.js\"",
     "migrate": "sequelize-mig migration:make",
-    "upgrade": "sequelize-cli db:migrate"
+    "upgrade": "sequelize-cli db:migrate",
+    "lint": "eslint \"./**/*.js\"",
+    "lintFix": "eslint --fix './**/*.js'",
+    "start": "NODE_ENV=production node app.js"
   },
   "keywords": [
     "Pharmacy",
@@ -24,11 +27,75 @@
     "morgan": "^1.10.0",
     "pg": "^8.5.1",
     "pg-hstore": "^2.3.3",
-    "sequelize": "^6.3.5",
-    "sequelize-mig": "^2.4.1"
+    "sequelize": "^6.3.5"
   },
   "devDependencies": {
+    "eslint": "^7.16.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-plugin-import": "^2.22.1",
     "nodemon": "^2.0.6",
-    "sequelize-cli": "^6.2.0"
+    "sequelize-cli": "^6.2.0",
+    "sequelize-mig": "^2.4.1"
+  },
+  "eslintConfig": {
+    "extends": "airbnb-base",
+    "env": {
+      "es6": true,
+      "browser": true,
+      "node": true
+    },
+    "rules": {
+      "brace-style": [
+        "error",
+        "stroustrup"
+      ],
+      "comma-dangle": [
+        "error",
+        "never"
+      ],
+      "no-unused-vars": [
+        "off"
+      ],
+      "no-var": [
+        "off"
+      ],
+      "one-var": [
+        "off"
+      ],
+      "no-plusplus": [
+        "off"
+      ],
+      "global-require": "off",
+      "import/no-dynamic-require": "off",
+      "consistent-return": "off",
+      "no-console": "off",
+      "semi": [
+        "error",
+        "always"
+      ],
+      "indent": [
+        "error",
+        4
+      ],
+      "comma-spacing": [
+        "error",
+        {
+          "before": false,
+          "after": true
+        }
+      ],
+      "object-curly-spacing": [
+        "error",
+        "always"
+      ],
+      "space-before-function-paren": [
+        "error",
+        {
+          "anonymous": "always",
+          "named": "always",
+          "asyncArrow": "always"
+        }
+      ]
+    }
   }
 }
