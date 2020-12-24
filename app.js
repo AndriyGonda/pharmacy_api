@@ -24,7 +24,7 @@ app.use('/', [
 app.use((error, req, res, next) => {
     res.status(error.status || 500);
     const errMessage = {status: error.status, message: error.message};
-    if (process.env === 'development') {
+    if (process.env.NODE_ENV === 'development') {
         errMessage.stack = error.stack;
         [errMessage.body] = error;
     }
