@@ -1,27 +1,20 @@
 const express = require('express');
 const { check } = require('express-validator');
+const { getUsers, postUsers } = require('../controlers/users');
+const validationMiddleware = require('../middlewares/validationMiddleware');
 
 const router = express.Router();
-
-const { getUsers, postUsers } = require('../controlers/users');
 
 router.route('/users')
     .get(getUsers)
     .post([
         check('name')
-            .isLength({ min: 5 })
-            .withMessage('Minimal length of name can be 5 characters'),
-
+            .isLength({ min: 5, max: 255 })
+            .withMessage('length can be in range 5-255 characters'),
         check('email')
             .isEmail()
-            .optional()
-            .withMessage('Invalid email'),
+            .withMessage('Invalid email')
 
-        check('firstName')
-            .isLength({ min: 3 })
-            .optional()
-            .withMessage('Minimal length of firstName can be 3 characters.')
-
-    ], postUsers);
+    ], validationMiddleware, postUsers);
 
 module.exports = router;

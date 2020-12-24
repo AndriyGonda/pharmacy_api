@@ -18,20 +18,39 @@ module.exports = (sequelize, DataTypes) => {
         id: {
             type: DataTypes.INTEGER,
             primaryKey: true,
-            autoIncrement: true
+            autoIncrement: true,
+            unique: true
         },
         name: {
             type: DataTypes.STRING,
             allowNull: false
         },
-        email: DataTypes.STRING,
-        firstName: DataTypes.STRING(50)
-    }, {
+        email: {
+            type: DataTypes.STRING,
+            unique: true,
+            allowNull: false
+        },
+        password: {
+            type: DataTypes.STRING(128)
+        },
+        isAdmin: {
+            type: DataTypes.BOOLEAN,
+            defaultValue: false
+        }
+    },{
         sequelize,
         modelName: 'User',
         tableName: 'users',
         underscored: true,
-        timestamps: false
+        timestamps: false,
+        instanceMethods: {
+            generateHash(password) {
+                return 'test'
+            },
+            validPassword(password) {
+                return false
+            }
+        }
     });
     return User;
 };
